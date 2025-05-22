@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 export const AppContext = createContext()
 
 const AppContextProvider = (props) => {
-    const currencySymbol = "$"
+    const currencySymbol = "Rs. "
     const backendUrl = import.meta.env.VITE_BACKEND_URL  // attached the backend url
     const [doctors, setDoctors] = useState([])
     const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false) // This store the user authentication  token which is genrated when a user register or login. When we reload the page it check if localstorage have the token then the initial value of that token bcz user refresh the page after the login inside the website 
