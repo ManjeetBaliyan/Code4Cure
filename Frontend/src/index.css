@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*Font for the entire website*/
+*{
+    font-family: Outfit;
+}
+/*This is use to make underline on that page where we present*/
+.active hr{
+    @apply block
+}
+
+/* Hide the scroll baar on the SpecialityMenu on Home Page */
+::-webkit-scrollbar{
+    @apply hidden
+}
+
+/*For the background color in the website*/
+@media(max-width:700px){
+    .active p{
+        @apply text-white bg-primary
+    }
+}
+

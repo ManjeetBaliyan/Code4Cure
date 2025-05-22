@@ -1,0 +1,1 @@
+in this folder we cresate all the pages for the admins. and same as the doctor folder.
