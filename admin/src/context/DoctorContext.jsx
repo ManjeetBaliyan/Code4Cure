@@ -97,9 +97,23 @@ const DoctorContextProvider = (props) => {
         }
     }
 
+    const startCall = async (appointmentId) => {
+        try {
+            const { data } = await axios.post(`${backendUrl}/api/doctor/start-call`, { appointmentId }, {
+                headers: { dToken } // doctor's token
+            });
 
-
-
+            if (data.success) {
+                toast.success("Call started");
+                window.open(`${data.roomUrl}?t=${data.token}`, '_blank'); // opens Daily Prebuilt with token
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("Error starting call");
+        }
+    }
 
 
 
@@ -117,7 +131,8 @@ const DoctorContextProvider = (props) => {
         getDashData,
         profileData,
         setProileData,
-        getProfileData
+        getProfileData,
+        startCall
     }
 
     return (

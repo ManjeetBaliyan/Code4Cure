@@ -20,7 +20,6 @@ function MyAppointments() {
     return dateArray[0] + " " + months[Number(dateArray[1])] + " " + dateArray[2]
   }
 
-
   // Arrow function for call the API of the my-appointments
   const getUserAppointments = async () => {
     try {
@@ -104,6 +103,28 @@ function MyAppointments() {
   }
 
 
+  const joinCall = async (item) => {
+    try {
+      
+      const { data } = await axios.post(
+        backendUrl + '/api/user/joinCall',
+        { appointmentId: item._id },
+        { headers: { token } }
+      );
+
+      if (data.success) {
+        toast.success("Call Started")
+        window.open(`${data.roomUrl}?t=${data.token}`, "_blank"); // Opens Daily.co Prebuilt room
+      } else {
+        
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || error.message);
+    }
+  };
+
   useEffect(() => {
     if (token) {
       getUserAppointments()
@@ -131,12 +152,58 @@ function MyAppointments() {
             </div>
             <div></div>
             <div className='flex flex-col gap-2 justify-end'>
-              {!item.cancelled && item.payment && !item.isCompleted && <button className='sm:min-w-48 py-2 border rounded text-stone-500 bg-indigo-50'>Paid</button>}
-              {!item.cancelled && !item.payment && !item.isCompleted && <button onClick={() => appointmentRazorpay(item._id)} className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-primary hover:text-white transition-all duration-300'>Pay Online</button>}
-              {!item.cancelled && !item.isCompleted && <button onClick={() => cancelAppointment(item._id)} className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border  hover:bg-red-600 hover:text-white transition-all duration-300'>Cancel appointment</button>}
-              {item.cancelled && !item.isCompleted && <button className='sm:min-w-48 py-2 border border-red-500 rounded text-red-500'>Appointment cancelled</button>}
-              {item.isCompleted && <button className='sm:min-w-48 py-2 border border-green-500 rounded text-green-500'>Completed</button>}
+              {/* Paid button */}
+              {!item.cancelled && item.payment && !item.isCompleted && !item.roomUrl && (
+                <button className='sm:min-w-48 py-2 border rounded text-stone-500 bg-indigo-50'>
+                  Paid
+                </button>
+              )}
+
+              {/* Pay Online button */}
+              {!item.cancelled && !item.payment && !item.isCompleted && (
+                <button
+                  onClick={() => appointmentRazorpay(item._id)}
+                  className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-primary hover:text-white transition-all duration-300'
+                >
+                  Pay Online
+                </button>
+              )}
+
+              {/* Cancel button */}
+              {!item.cancelled && !item.isCompleted && (
+                <button
+                  onClick={() => cancelAppointment(item._id)}
+                  className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-red-600 hover:text-white transition-all duration-300'
+                >
+                  Cancel appointment
+                </button>
+              )}
+
+              {/* Appointment Cancelled */}
+              {item.cancelled && !item.isCompleted && (
+                <button className='sm:min-w-48 py-2 border border-red-500 rounded text-red-500'>
+                  Appointment cancelled
+                </button>
+              )}
+
+              {/* Completed */}
+              {item.isCompleted && (
+                <button className='sm:min-w-48 py-2 border border-green-500 rounded text-green-500'>
+                  Completed
+                </button>
+              )}
+
+              {/* Join Call Button */}
+              {!item.cancelled && item.payment && !item.isCompleted && item.roomUrl && (
+                <button
+                  onClick={() => joinCall(item)}
+                  className='sm:min-w-48 py-2 border border-blue-500 rounded text-blue-500 hover:bg-blue-600 hover:text-white transition-all duration-300'
+                >
+                  Join Call
+                </button>
+              )}
             </div>
+
           </div>
         ))}
       </div>
