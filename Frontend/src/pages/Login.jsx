@@ -15,6 +15,10 @@ function Login() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [gender, setGender] = useState('');
+  const [dob, setDob] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
 
   //We use the onSubmitHandler function to control what happens when a form is submitted, such as validating input, preventing page reload, and sending data to a server.
   //Inshort it's the function to handle action when a user create the account or login.
@@ -23,7 +27,7 @@ function Login() {
 
     try {
       if (state === 'Sign Up') {
-        const { data } = await axios.post(backendUrl + '/api/user/register', { name, email, password })
+        const { data } = await axios.post(backendUrl + '/api/user/register', { name, email, password,gender, phone, address, dob })
         if (data.success) {
           localStorage.setItem('token', data.token)
           setToken(data.token)
@@ -65,21 +69,69 @@ function Login() {
         <p>Please {state === 'Sign Up' ? "sign up" : "log in"} to book appointment</p>
         {
           state === 'Sign Up' && <div className='w-full'>
-            <p>Full Name</p>
+            <p><b>Full Name </b></p>
             <input className='border border-zinc-300 rounded w-full p-2 mt-1' type='text' onChange={(e) => setName(e.target.value)} value={name} required />
           </div>
         }
 
         <div className='w-full'>
-          <p>Email</p>
+        <p> <b>Gender </b></p>
+        <select
+          className='border border-zinc-300 rounded w-full p-2 mt-1'
+          value={gender}
+          onChange={(e) => setGender(e.target.value)}
+          required
+        >
+          <option value=''>Select Gender</option>
+          <option value='Male'>Male</option>
+          <option value='Female'>Female</option>
+          <option value='Other'>Other</option>
+        </select>
+      </div>
+
+        <div className='w-full'>
+          <p> <b>Email </b></p>
           <input
             className='border border-zinc-300 rounded w-full p-2 mt-1' type='email' onChange={(e) => setEmail(e.target.value)} value={email} required />
         </div>
 
         <div className='w-full'>
-          <p>Password</p>
+          <p> <b>Password </b></p>
           <input className='border border-zinc-300 rounded w-full p-2 mt-1' type='password' onChange={(e) => setPassword(e.target.value)} value={password} required />
         </div>
+
+        <div className = 'w-full'>
+        <p><b> Date of Birth </b></p>
+        <input
+          className='border border-zinc-300 rounded w-full p-2 mt-1'
+          type='date'
+          onChange={(e) => setDob(e.target.value)}
+          value={dob}
+          required
+        />
+      </div>
+
+        <div className='w-full'>
+        <p><b>Phone Number</b></p>
+        <input
+          className='border border-zinc-300 rounded w-full p-2 mt-1'
+          type='tel'
+          onChange={(e) => setPhone(e.target.value)}
+          value={phone}
+          required
+        />
+      </div>
+
+        <div className='w-full'>
+        <p><b>Address </b></p>
+        <textarea
+          className='border border-zinc-300 rounded w-full p-2 mt-1'
+          rows={2}
+          onChange={(e) => setAddress(e.target.value)}
+          value={address}
+          required
+        />
+      </div>
 
         <button type='submit' className='bg-primary text-white w-full py-2 rounded-md text-base'>{state === 'Sign Up' ? "Create Account" : "Login"}</button>
         {

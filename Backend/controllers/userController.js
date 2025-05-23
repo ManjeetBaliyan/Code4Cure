@@ -15,9 +15,9 @@ import axios from "axios";
 // API to register user
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, gender,  phone, address, dob } = req.body;
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !gender || !phone || !address || !dob) {
       return res.json({
         success: false,
         message: "Missing Details",
@@ -48,6 +48,10 @@ const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      gender,
+      phone,
+      address,
+      dob,
     };
 
     const newuser = new userModel(userData);
