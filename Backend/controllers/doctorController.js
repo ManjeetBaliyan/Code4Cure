@@ -254,13 +254,14 @@ const startOrGetCall = async (req, res) => {
     }
 
     const createAndSaveNewRoom = async () => {
+      const now = Math.floor(Date.now() / 1000);
       const roomResp = await axios.post(
         "https://api.daily.co/v1/rooms",
         {
           name: `appt-${appointment._id}`,
           privacy: "private",
           properties: {
-            exp: Math.floor(Date.now() / 1000) + 3600,
+            exp: now + 3600,
             eject_at_room_exp: true,
             enable_chat: true,
             enable_transcription: true,
@@ -270,6 +271,8 @@ const startOrGetCall = async (req, res) => {
             start_audio_off: false,
             start_video_off: false,
             lang: "en",
+            eject_at_room_exp: false,
+            max_participants: 2,
           },
         },
         {
@@ -300,6 +303,7 @@ const startOrGetCall = async (req, res) => {
     }
 
     const roomName = new URL(appointment.roomUrl).pathname.split("/").pop();
+    const now = Math.floor(Date.now() / 1000);
 
     const tokenResp = await axios.post(
       "https://api.daily.co/v1/meeting-tokens",
@@ -308,8 +312,9 @@ const startOrGetCall = async (req, res) => {
           room_name: roomName,
           is_owner: true,
           user_name: "doctor",
-          exp: Math.floor(Date.now() / 1000) + 3600,
           enable_live_captions_ui: true,
+          nbf: now,
+          exp: now + 3600,
         },
       },
       {
@@ -317,19 +322,13 @@ const startOrGetCall = async (req, res) => {
       }
     );
 
-    console.log("Token Response:", tokenResp.data.token);
-    
-
     return res.json({
       success: true,
       roomUrl: appointment.roomUrl,
       token: tokenResp.data.token,
     });
   } catch (error) {
-    console.error(
-      "Error starting or getting doctor call:",
-      error.response?.data || error.message
-    );
+    console.error("Error starting or getting doctor call:", error.response?.data || error.message);
     return res.status(500).json({ success: false, message: error.message });
   }
 };
