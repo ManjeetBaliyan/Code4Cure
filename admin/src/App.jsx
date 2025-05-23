@@ -15,6 +15,7 @@ import { DoctorContext } from './context/DoctorContext';
 import DoctorDashboard from './pages/Doctor/DoctorDashboard';
 import DoctorAppointment from './pages/Doctor/DoctorAppointment';
 import DoctorProfile from './pages/Doctor/DoctorProfile';
+import VideoCallWrapper from './pages/VideoCallWrapper';
 
 
 
@@ -46,6 +47,7 @@ function App() {
           <Route path='/doctor-dashboard' element={<DoctorDashboard />} />
           <Route path='/doctor-appointments' element={<DoctorAppointment />} />
           <Route path='/doctor-profile' element={<DoctorProfile />} />
+          <Route path="/video-call" element={<VideoCallWrapper />} />
 
         </Routes>
       </div>

@@ -1,28 +1,51 @@
 // Contain the contact information.
-import React from 'react'
-import { assets } from '../assets/assets'
+import React from 'react';
+import { assets } from '../assets/assets';
 
 function Contact() {
   return (
-    <div>
-      <div className='text-center text-2xl pt-10 text-gray-500'>
-        <p>CONTACT<span className='text-gray-700 font-semibold'>US</span></p>
-      </div>
+    <div className="bg-white py-16 px-4 sm:px-8 md:px-16 lg:px-24 text-gray-700">
+      <h2 className="text-3xl font-bold text-center mb-4">
+        CONTACT <span className="text-primary">US</span>
+      </h2>
+      <p className="text-center text-gray-500 mb-12 max-w-xl mx-auto">
+        We'd love to hear from you. Whether you have a question about features, pricing, or anything else — our team is ready to help.
+      </p>
 
-      <div className='my-10 flex flex-col justify-center md:flex-row gap-10 mb-28 text-sm' >
-        <img className='w-full md:max-w-[360px]' src={assets.contact_image} alt="" />
+      <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-10">
+        {/* Left Side: Contact Details */}
+        <div className="flex-1 space-y-6">
+          <div>
+            <h4 className="font-semibold text-lg text-gray-800">Our Office</h4>
+            <p className="text-gray-500 mt-1">
+              C4E Fire Station Road, Janakpuri <br />
+              New Delhi, Delhi, India
+            </p>
+          </div>
+          <div>
+            <h4 className="font-semibold text-lg text-gray-800">Contact Info</h4>
+            <p className="text-gray-500 mt-1">
+              Tel: 826-603-7477 <br />
+              Email: manjeetbaliyan21@gmail.com
+            </p>
+          </div>
+          <div>
+            <h4 className="font-semibold text-lg text-gray-800">Team</h4>
+            <p className="text-gray-500 mt-1">Team Name: <span className="font-medium text-primary">Code4Cure</span></p>
+          </div>
+        </div>
 
-        <div className='flex flex-col justify-center items-start gap-6'>
-          <p className='font-semibold text-lg text-gray-600'>Our OFFICE</p>
-          <p className='text-gray-500'>C4E Fire Station Road,Janakpuri <br /> New Delhi, Delhi,India</p>
-          <p className='text-gray-500'>Tel: 826-603-7477 <br />Email: manjeetbaliyan21@gmail.com </p>
-          <p className='font-semibold text-lg text-gray-600'>Careers at PRESCRIPTO</p>
-          <p className='text-gray-500'>Learn more about our teams and job openings.</p>
-          <button className='border border-black px-8 py-4 text-sm hover:bg-black hover:text-white transition-all duration-500'>Explore Jobs</button>
+        {/* Right Side: Image */}
+        <div className="flex-1 flex justify-center">
+          <img
+            src={assets.contact_image}
+            alt="Contact"
+            className="w-full max-w-sm md:max-w-md lg:max-w-lg rounded-2xl shadow-md object-contain"
+          />
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Contact
+export default Contact;

@@ -1,27 +1,61 @@
-import React from 'react'
-import { assets } from '../assets/assets'
+import React from 'react';
+import { assets } from '../assets/assets';
+
 const Header = () => {
     return (
-        <div className='flex flex-col md:flex-row flex-wrap bg-primary rounded-lg px-6 md:px-10 lg:px-20'>
-            {/*--------------Left Side of the header------------------ */}
-            <div className='md:w-1/2 flex flex-col items-start justify-center gap-4 py-10 m-auto md:py-[10vw] md:mb-[-30px]'>
-                <p className='text-3xl md:text-4xl lg:text-5xl text-white font-semibold leading-tight md:leading-tight lg:leading-tight'>
-                    Book Appointment <br /> With Trusted Doctors
-                </p>
-                <div className='flex flex-col md:flex-row items-center gap-3 text-white text-sm font-light'>
-                    <img className='w-28' src={assets.group_profiles} alt="" />
-                    <p>Simply browse through our extensive list of trusted doctors,<br className='hidden sm:block' /> schedule your appointment hassle-free.</p>
+        <div className="relative overflow-hidden rounded-2xl shadow-xl bg-gradient-to-r from-[#e0f7fa] via-[#f3fdfc] to-[#ffffff] px-6 md:px-12 py-16 md:py-24 flex flex-col-reverse md:flex-row items-center justify-between">
+
+            {/* Decorative Gradient Blobs */}
+            <div className="absolute -top-10 -left-10 w-64 h-64 bg-gradient-to-br from-primary to-cyan-400 opacity-10 rounded-full blur-3xl z-0" />
+            <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-gradient-to-tr from-pink-300 to-purple-400 opacity-10 rounded-full blur-3xl z-0" />
+
+            {/* Left Content */}
+            <div className="z-10 md:w-1/2 flex flex-col gap-6 text-center md:text-left">
+                <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 leading-tight">
+                    Instantly Book <br className="hidden md:block" />
+                    Trusted Doctors
+                </h1>
+
+                <div className="flex items-center gap-4 bg-white bg-opacity-80 backdrop-blur-md p-4 rounded-xl shadow-md max-w-md mx-auto md:mx-0">
+                    <img src={assets.group_profiles} alt="Group Profiles" className="w-20" />
+                    <p className="text-sm text-gray-600">
+                        Easily browse top-rated professionals <br className="hidden sm:block" />
+                        and book appointments seamlessly.
+                    </p>
                 </div>
-                <a href="#speciality" className='flex items-center gap-2 bg-white px-8 py-3 rounded-full text-gray-600 text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300'>
-                    Book Appointment <img className='w-3' src={assets.arrow_icon} alt="" />
+
+                {/* Statistics Badges */}
+                <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-4">
+                    <div className="bg-white bg-opacity-80 backdrop-blur-md px-4 py-2 rounded-xl shadow text-sm text-gray-700 font-medium">
+                        5000+ Happy Patients
+                    </div>
+                    <div className="bg-white bg-opacity-80 backdrop-blur-md px-4 py-2 rounded-xl shadow text-sm text-gray-700 font-medium">
+                        Effortless Booking
+                    </div>
+                    <div className="bg-white bg-opacity-80 backdrop-blur-md px-4 py-2 rounded-xl shadow text-sm text-gray-700 font-medium">
+                        24/7 Support Available
+                    </div>
+                </div>
+
+                <a
+                    href="#speciality"
+                    className="inline-flex items-center gap-2 bg-primary text-white px-8 py-3 rounded-full text-sm font-medium shadow hover:scale-105 transition-transform duration-300 w-fit mx-auto md:mx-0"
+                >
+                    Book Appointment
+                    <img src={assets.arrow_icon} alt="Arrow" className="w-3" />
                 </a>
             </div>
-            {/*--------------Right Side of the header------------------ */}
-            <div className='md:w-1/2 relative'>
-                <img className='w-full md:absolute bottom-0 h-auto rounded-lg' src={assets.header_img} alt="" />
+
+            {/* Right Image */}
+            <div className="z-10 md:w-1/2 mb-10 md:mb-0 flex justify-center">
+                <img
+                    src={assets.header_img}
+                    alt="Header"
+                    className="w-full max-w-md rounded-2xl shadow-lg"
+                />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Header
+export default Header;
