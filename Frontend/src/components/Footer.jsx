@@ -30,11 +30,7 @@ function Footer() {
                     </ul>
                 </div>
             </div>
-            {/*-------------------------Copyright Text ------------------------ */}
-            <div>
-                <hr/>
-                <p className='py-5 text-sm text-center'>Copyright © 2025 Code4Cure - All Right Reserved.</p>
-            </div>
+            
         </div>
     )
 }

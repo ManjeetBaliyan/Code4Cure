@@ -1,5 +1,5 @@
 import React from 'react'
-import Login from './pages/login'
+import Login from './pages/Login'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { useContext } from 'react';
@@ -16,6 +16,8 @@ import DoctorDashboard from './pages/Doctor/DoctorDashboard';
 import DoctorAppointment from './pages/Doctor/DoctorAppointment';
 import DoctorProfile from './pages/Doctor/DoctorProfile';
 import VideoCallWrapper from './pages/VideoCallWrapper';
+import DoctorHome from './pages/Doctor/DoctorHome';
+import AdminHome from './pages/Admin/AdminHome'
 
 
 
@@ -35,21 +37,23 @@ function App() {
       <div className='flex items-start'>
         <Sidebar />
 
-        <Routes>
-          {/* ---ADMIN ROUTES----- */}
-          <Route path='/' element={<></>} />
-          <Route path='/add-doctor' element={<AddDoctor />} />
-          <Route path='/all-appointments' element={<AllApointments />} />
-          <Route path='/admin-dashboard' element={<Dashboard />} />
-          <Route path='/doctor-list' element={<DoctorsList />} />
+       <Routes>
+  {/* Conditionally render home route based on token */}
+  {aToken && <Route path='/' element={<AdminHome />} />}
+  {dToken && !aToken && <Route path='/' element={<DoctorHome />} />}
 
-          {/*--------DOCTOR ROUTES------------*/}
-          <Route path='/doctor-dashboard' element={<DoctorDashboard />} />
-          <Route path='/doctor-appointments' element={<DoctorAppointment />} />
-          <Route path='/doctor-profile' element={<DoctorProfile />} />
-          <Route path="/video-call" element={<VideoCallWrapper />} />
+  {/* ---ADMIN ROUTES----- */}
+  <Route path='/add-doctor' element={<AddDoctor />} />
+  <Route path='/all-appointments' element={<AllApointments />} />
+  <Route path='/admin-dashboard' element={<Dashboard />} />
+  <Route path='/doctor-list' element={<DoctorsList />} />
 
-        </Routes>
+  {/*--------DOCTOR ROUTES------------*/}
+  <Route path='/doctor-dashboard' element={<DoctorDashboard />} />
+  <Route path='/doctor-appointments' element={<DoctorAppointment />} />
+  <Route path='/doctor-profile' element={<DoctorProfile />} />
+  <Route path="/video-call" element={<VideoCallWrapper />} />
+</Routes>
       </div>
 
     </div>
