@@ -1,5 +1,3 @@
-// Footer of the home page.
-
 import React from 'react'
 import { assets } from '../assets/assets'
 function Footer() {
