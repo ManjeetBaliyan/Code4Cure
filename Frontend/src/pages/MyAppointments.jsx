@@ -105,25 +105,24 @@ function MyAppointments() {
 
   const joinCall = async (item) => {
     try {
+      const { data } = await axios.post(backendUrl + '/api/user/joinCall', {
+        appointmentId: item._id,
+      }, { headers: { token } });
+
+      console.log(data);
       
-      const { data } = await axios.post(
-        backendUrl + '/api/user/joinCall',
-        { appointmentId: item._id },
-        { headers: { token } }
-      );
 
       if (data.success) {
         toast.success("Call Started")
-        window.open(`${data.roomUrl}?t=${data.token}`, "_blank"); // Opens Daily.co Prebuilt room
+        navigate('/video-call', { state: { roomUrl: data.roomUrl, token: data.token } });
       } else {
-        
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.response?.data?.message || error.message);
     }
   };
+
 
   useEffect(() => {
     if (token) {

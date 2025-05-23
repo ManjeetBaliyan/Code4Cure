@@ -240,28 +240,36 @@ const updateDoctorProfile = async (req, res) => {
 };
 
 // API to start call for doctor panel
+// API to start call for doctor panel with transcription and chat enabled
 const startOrGetCall = async (req, res) => {
   try {
-    const appointment = await appointmentModel.findById(req.body.appointmentId);
+    const { appointmentId, docId } = req.body;
+    const appointment = await appointmentModel.findById(appointmentId);
 
-    if (!appointment || appointment.docId.toString() !== req.body.docId) {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "Unauthorized or appointment not found",
-        });
+    if (!appointment || appointment.docId.toString() !== docId) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized or appointment not found",
+      });
     }
 
-    // If no room exists, create it
-    if (!appointment.roomUrl) {
+    const createAndSaveNewRoom = async () => {
       const roomResp = await axios.post(
         "https://api.daily.co/v1/rooms",
         {
           name: `appt-${appointment._id}`,
+          privacy: "private",
           properties: {
-            exp: Math.floor(Date.now() / 1000) + 3600, // 1 hour
+            exp: Math.floor(Date.now() / 1000) + 3600,
             eject_at_room_exp: true,
+            enable_chat: true,
+            enable_transcription: true,
+            enable_people_ui: true,
+            enable_prejoin_ui: true,
+            enable_network_ui: true,
+            start_audio_off: false,
+            start_video_off: false,
+            lang: "en",
           },
         },
         {
@@ -272,6 +280,23 @@ const startOrGetCall = async (req, res) => {
       appointment.roomUrl = roomResp.data.url;
       appointment.status = "in-progress";
       await appointment.save();
+    };
+
+    if (!appointment.roomUrl) {
+      await createAndSaveNewRoom();
+    } else {
+      const roomName = new URL(appointment.roomUrl).pathname.split("/").pop();
+      try {
+        await axios.get(`https://api.daily.co/v1/rooms/${roomName}`, {
+          headers: { Authorization: `Bearer ${process.env.DAILY_API_KEY}` },
+        });
+      } catch (err) {
+        if (err.response?.status === 404) {
+          await createAndSaveNewRoom();
+        } else {
+          throw err;
+        }
+      }
     }
 
     const roomName = new URL(appointment.roomUrl).pathname.split("/").pop();
@@ -283,15 +308,17 @@ const startOrGetCall = async (req, res) => {
           room_name: roomName,
           is_owner: true,
           user_name: "doctor",
-          exp: Math.floor(Date.now() / 1000) + 1800, // 30 min
-          enable_chat : true,
-          enable_transcription : true
+          exp: Math.floor(Date.now() / 1000) + 3600,
+          enable_live_captions_ui: true,
         },
       },
       {
         headers: { Authorization: `Bearer ${process.env.DAILY_API_KEY}` },
       }
     );
+
+    console.log("Token Response:", tokenResp.data.token);
+    
 
     return res.json({
       success: true,
@@ -306,6 +333,7 @@ const startOrGetCall = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 export {
   changeAvailability,

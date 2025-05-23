@@ -10,6 +10,7 @@ import MyAppointments from './pages/MyAppointments'
 import Appointments from './pages/Appointments'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import VideoCallWrapper from './pages/videocallWrapper'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -28,6 +29,7 @@ const App = () => {
         <Route path='/about' element={<About/>} />
         <Route path='/my-appointments' element={<MyAppointments/>} />
         <Route path='/appointments/:docId' element={<Appointments/>} />
+        <Route path="/video-call" element={<VideoCallWrapper />} />
       </Routes>
       <Footer/> {/*Footer will be visible on all the pages. */}
     </div>

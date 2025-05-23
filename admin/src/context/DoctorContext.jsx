@@ -1,6 +1,7 @@
 // Here we add the logic for the admin login and admin token.
-import { useState } from "react";
+import { use, useState } from "react";
 import { createContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
@@ -15,6 +16,8 @@ const DoctorContextProvider = (props) => {
     const [appointments, setAppointments] = useState([])
     const [dashData, setDashData] = useState(false)
     const [profileData, setProileData] = useState(false)
+
+    const navigate = useNavigate()
 
 
     const getAppointments = async () => {
@@ -99,23 +102,23 @@ const DoctorContextProvider = (props) => {
 
     const startCall = async (appointmentId) => {
         try {
-            const { data } = await axios.post(`${backendUrl}/api/doctor/start-call`, { appointmentId }, {
-                headers: { dToken } // doctor's token
-            });
+            const { data } = await axios.post(`${backendUrl}/api/doctor/start-call`, {
+                appointmentId,
+            }, { headers: { dToken } });
 
+            console.log(data)
             if (data.success) {
                 toast.success("Call started");
-                window.open(`${data.roomUrl}?t=${data.token}`, '_blank'); // opens Daily Prebuilt with token
+                navigate('/video-call', { state: { roomUrl: data.roomUrl, token: data.token } });
             } else {
                 toast.error(data.message);
             }
         } catch (error) {
-            console.error(error);
+            console.log(error);
+            
             toast.error("Error starting call");
         }
-    }
-
-
+    };
 
     const value = {
         backendUrl,

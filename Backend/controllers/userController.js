@@ -10,7 +10,7 @@ import doctorModel from "../models/doctorModel.js";
 import appointmentModel from "../models/appointmentModel.js";
 import rozorpay from "razorpay";
 import Razorpay from "razorpay";
-import axios from "axios"
+import axios from "axios";
 
 // API to register user
 const registerUser = async (req, res) => {
@@ -361,8 +361,10 @@ const verifyRazorpay = async (req, res) => {
 };
 
 const joinCall = async (req, res) => {
-  const { appointmentId ,userId} = req.body;
+  const { appointmentId, userId } = req.body;
+  console.log("joinCall called with appointmentId:", appointmentId, "and userId:", userId);
   
+
   if (!appointmentId) {
     return res.status(400).json({ error: "appointmentId is required" });
   }
@@ -398,6 +400,7 @@ const joinCall = async (req, res) => {
           room_name: roomName,
           is_owner: false,
           user_name: "patient", // Optional: replace with actual patient name
+          enable_live_captions_ui: true,
         },
       },
       {
@@ -406,11 +409,13 @@ const joinCall = async (req, res) => {
     );
 
     const patientToken = tokenResponse.data.token;
+    console.log(patientToken);
+    
 
     res.json({
       success: true,
       token: patientToken,
-      roomUrl: `${appointment.roomUrl}?t=${patientToken}`,
+      roomUrl: appointment.roomUrl,
     });
   } catch (error) {
     console.error(
