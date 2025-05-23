@@ -1,56 +1,80 @@
-// components/VideoCall.js
+// components/VideoCall.jsx
 import React, { useEffect, useRef, useState } from 'react';
 import DailyIframe from '@daily-co/daily-js';
 
 function VideoCall({ roomUrl, token }) {
-    const callFrameRef = useRef(null);
-    const [captionsOn, setCaptionsOn] = useState(true);
+  const containerRef = useRef(null);
+  const [captionsOn, setCaptionsOn] = useState(true);
 
-    useEffect(() => {
-        const frame = DailyIframe.createFrame({
-            iframeStyle: {
-                position: 'relative',
-                width: '100%',
-                height: '100%',
-                border: '0',
-                borderRadius: '1rem',
-            },
-        });
+  useEffect(() => {
+    if (!containerRef.current) return;
 
-        frame.join({ url: `${roomUrl}?t=${token}` });
+    const frame = DailyIframe.createFrame({
+      showLeaveButton: true,
+      iframeStyle: {
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        width: '100%',
+        height: '100%',
+        border: '0',
+      },
+    });
 
-        callFrameRef.current.appendChild(frame.iframe);
-        callFrameRef.current.callFrame = frame;
+    frame.join({ url: `${roomUrl}?t=${token}` });
 
-        return () => {
-            frame.leave();
-        };
-    }, [roomUrl, token]);
+    // Clear any existing content just to be safe
+    containerRef.current.innerHTML = '';
+    containerRef.current.appendChild(frame.iframe);
+    containerRef.current.callFrame = frame;
 
-    const toggleCaptions = async () => {
-        const frame = callFrameRef.current.callFrame;
-        if (!frame) return;
-
-        try {
-            await frame.setTranscription({ startTranscription: !captionsOn });
-            setCaptionsOn(!captionsOn);
-        } catch (error) {
-            console.error("Failed to toggle transcription:", error);
-        }
+    return () => {
+      frame.leave();
+      frame.destroy();
     };
+  }, [roomUrl, token]);
 
+  const toggleCaptions = async () => {
+    const frame = containerRef.current.callFrame;
+    if (!frame) return;
 
-    return (
-        <div className="w-full h-screen relative bg-black">
-            <div ref={callFrameRef} className="w-full h-full" />
-            <button
-                onClick={toggleCaptions}
-                className="absolute top-4 right-4 px-4 py-2 bg-blue-600 text-white rounded"
-            >
-                {captionsOn ? 'Turn Captions Off' : 'Turn Captions On'}
-            </button>
-        </div>
-    );
+    try {
+      await frame.setTranscription({ startTranscription: !captionsOn });
+      setCaptionsOn(!captionsOn);
+    } catch (error) {
+      console.error('Failed to toggle transcription:', error);
+    }
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 9999,
+        backgroundColor: 'black',
+      }}
+    >
+      <button
+        onClick={toggleCaptions}
+        style={{
+          position: 'absolute',
+          top: '1rem',
+          right: '1rem',
+          zIndex: 10000,
+          padding: '0.5rem 1rem',
+          backgroundColor: '#2563eb',
+          color: 'white',
+          border: 'none',
+          borderRadius: '0.5rem',
+          cursor: 'pointer',
+        }}
+      >
+        {captionsOn ? 'Turn Captions Off' : 'Turn Captions On'}
+      </button>
+    </div>
+  );
 }
 
 export default VideoCall;

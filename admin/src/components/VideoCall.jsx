@@ -1,64 +1,80 @@
-// components/VideoCall.js
+// components/VideoCall.jsx
 import React, { useEffect, useRef, useState } from 'react';
 import DailyIframe from '@daily-co/daily-js';
 
 function VideoCall({ roomUrl, token }) {
-    const callFrameRef = useRef(null);
-    const [captionsOn, setCaptionsOn] = useState(false);
-    const [callFrame, setCallFrame] = useState(null);
+  const containerRef = useRef(null);
+  const [captionsOn, setCaptionsOn] = useState(true);
 
-    console.log('VideoCall component rendered with roomUrl:', roomUrl, 'and token:', token);
-    
+  useEffect(() => {
+    if (!containerRef.current) return;
 
-    useEffect(() => {
-        const frame = DailyIframe.createFrame({
-            iframeStyle: {
-                position: 'relative',
-                width: '100%',
-                height: '100%',
-                border: '0',
-                borderRadius: '1rem',
-            },
-        });
+    const frame = DailyIframe.createFrame({
+      showLeaveButton: true,
+      iframeStyle: {
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        width: '100%',
+        height: '100%',
+        border: '0',
+      },
+    });
 
-        frame.join({ url: `${roomUrl}?t=${token}` });
+    frame.join({ url: `${roomUrl}?t=${token}` });
 
-        callFrameRef.current.appendChild(frame.iframe);
-        callFrameRef.current.callFrame = frame;
-        setCallFrame(frame);
+    // Clear any existing content just to be safe
+    containerRef.current.innerHTML = '';
+    containerRef.current.appendChild(frame.iframe);
+    containerRef.current.callFrame = frame;
 
-        return () => {
-            frame.leave();
-        };
-    }, [roomUrl, token]);
-
-    const toggleCaptions = async () => {
-        if (!callFrame) return;
-
-        try {
-            if (captionsOn) {
-                await callFrame.transcription().stop();
-            } else {
-                await callFrame.transcription().start({ language: 'en' });
-            }
-            setCaptionsOn(!captionsOn);
-        } catch (error) {
-            console.error('Failed to toggle transcription:', error);
-        }
+    return () => {
+      frame.leave();
+      frame.destroy();
     };
+  }, [roomUrl, token]);
 
-    return (
-        <div className="w-full h-screen relative bg-black">
-            <div ref={callFrameRef} className="w-full h-full" />
-            <button
-                onClick={toggleCaptions}
-                className="absolute top-4 right-4 px-4 py-2 bg-blue-600 text-white rounded shadow"
-            >
-                {captionsOn ? 'Turn Captions Off' : 'Turn Captions On'}
-            </button>
-        </div>
-    );
+  const toggleCaptions = async () => {
+    const frame = containerRef.current.callFrame;
+    if (!frame) return;
+
+    try {
+      await frame.setTranscription({ startTranscription: !captionsOn });
+      setCaptionsOn(!captionsOn);
+    } catch (error) {
+      console.error('Failed to toggle transcription:', error);
+    }
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 9999,
+        backgroundColor: 'black',
+      }}
+    >
+      <button
+        onClick={toggleCaptions}
+        style={{
+          position: 'absolute',
+          top: '1rem',
+          right: '1rem',
+          zIndex: 10000,
+          padding: '0.5rem 1rem',
+          backgroundColor: '#2563eb',
+          color: 'white',
+          border: 'none',
+          borderRadius: '0.5rem',
+          cursor: 'pointer',
+        }}
+      >
+        {captionsOn ? 'Turn Captions Off' : 'Turn Captions On'}
+      </button>
+    </div>
+  );
 }
-
 
 export default VideoCall;
