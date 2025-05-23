@@ -7,7 +7,7 @@ import { AppContext } from '../../context/AppContext'
 
 function DoctorAppointment() {
 
-  const { getAppointments, appointments, dToken, completeAppointment, cancelAppointment , startCall} = useContext(DoctorContext)
+  const { getAppointments, appointments, dToken, completeAppointment, cancelAppointment, startCall } = useContext(DoctorContext)
   const { calculateAge, slotDateFormat, currency } = useContext(AppContext)
   useEffect(() => {
     if (dToken) {
@@ -52,11 +52,17 @@ function DoctorAppointment() {
                   ? <p className='text-red-400 text-xs font-medium'>Cancelled</p>
                   : item.isCompleted
                     ? <p className='text-green-500 text-xs font-medium'>Completed</p>
-                    : <div className='flex'>
-                      <img onClick={() => cancelAppointment(item._id)} className='w-10 cursor-pointer' src={assets.cancel_icon} alt="" />
-                      <img onClick={() => completeAppointment(item._id)} className='w-10 cursor-pointer' src={assets.tick_icon} alt="" />
-                      <img onClick={() => startCall(item._id)} className='w-10 cursor-pointer' src={assets.video_icon} alt="Start Call" />
-                    </div>
+                    :
+                    item.payment === true ? (
+                      <div className='flex'>
+                        <img onClick={() => startCall(item._id)} className='w-10 cursor-pointer' src={assets.video_icon} alt="Start Call" />
+                      </div>)
+                      : (<div className='flex'>
+                        <img onClick={() => cancelAppointment(item._id)} className='w-10 cursor-pointer' src={assets.cancel_icon} alt="" />
+                        <img onClick={() => completeAppointment(item._id)} className='w-10 cursor-pointer' src={assets.tick_icon} alt="" />
+                      </div>
+                      )
+
               }
             </div>
           ))
