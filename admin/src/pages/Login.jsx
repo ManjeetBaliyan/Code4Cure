@@ -7,6 +7,8 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { DoctorContext } from '../context/DoctorContext'
 
+
+
 function Login() {
 
   const [state, setState] = useState('Admin') // This state we manage the admin login andd the doctors login.
