@@ -362,8 +362,6 @@ const verifyRazorpay = async (req, res) => {
 
 const joinCall = async (req, res) => {
   const { appointmentId, userId } = req.body;
-  console.log("joinCall called with appointmentId:", appointmentId, "and userId:", userId);
-  
 
   if (!appointmentId) {
     return res.status(400).json({ error: "appointmentId is required" });
@@ -390,8 +388,8 @@ const joinCall = async (req, res) => {
         .json({ error: "Doctor has not started the call yet" });
     }
 
-    // Extract roomName from roomUrl: https://your-subdomain.daily.co/roomName
     const roomName = new URL(appointment.roomUrl).pathname.split("/").pop();
+    const now = Math.floor(Date.now() / 1000);
 
     const tokenResponse = await axios.post(
       "https://api.daily.co/v1/meeting-tokens",
@@ -399,8 +397,10 @@ const joinCall = async (req, res) => {
         properties: {
           room_name: roomName,
           is_owner: false,
-          user_name: "patient", // Optional: replace with actual patient name
+          user_name: "patient",
           enable_live_captions_ui: true,
+          nbf: now,
+          exp: now + 3600, // 1 hour valid
         },
       },
       {
@@ -408,13 +408,9 @@ const joinCall = async (req, res) => {
       }
     );
 
-    const patientToken = tokenResponse.data.token;
-    console.log(patientToken);
-    
-
     res.json({
       success: true,
-      token: patientToken,
+      token: tokenResponse.data.token,
       roomUrl: appointment.roomUrl,
     });
   } catch (error) {
