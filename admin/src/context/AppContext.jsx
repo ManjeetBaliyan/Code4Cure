@@ -5,7 +5,7 @@ export const AppContext = createContext()
 const AppContextProvider = (props) => {
 
     //Set the currency sign
-    const currency ='$'
+    const currency ='Rs '
 
     // Function to calculate the age of the patient whoes show in the AllAppointments page.
     const calculateAge = (dob) => {
