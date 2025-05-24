@@ -20,7 +20,6 @@ const AdminContextProvider = (props) => {
     const getAllDoctors = async () => {
         try {
             const { data } = await axios.post(backendUrl + '/api/admin/all-doctors', {}, { headers: { atoken: aToken }, });
-            console.log("API Response:", data);
             if (data.success) {
                 setDoctors(data.doctors)
             } else {

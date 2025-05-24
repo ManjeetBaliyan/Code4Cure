@@ -1,9 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect , useContext} from 'react';
 import DailyIframe from '@daily-co/daily-js';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../contexts/AppContext';
+import axios from 'axios';
 
-function VideoCall({ roomUrl, token }) {
+function VideoCall({ roomUrl, roomToken, appointmentId }) {
   const navigate = useNavigate();
+  const { backendUrl, token } = useContext(AppContext)
+  
+  async function leftCall() {
+    await axios.post(backendUrl + '/api/user/left-call', { appointmentId }, { headers: { token } })
+      .then((response) => {
+        console.log(response.data);
+        navigate('/my-appointments'); // Adjust the redirect path as necessary
+      })
+      .catch((error) => {
+        console.error('Error leaving call:', error);
+      });
+  }
 
   useEffect(() => {
     const frame = DailyIframe.createFrame({
@@ -25,12 +39,12 @@ function VideoCall({ roomUrl, token }) {
     }
 
     // 2. Load (not join) to show prebuilt UI
-    frame.join({ url: `${roomUrl}?t=${token}` });
+    frame.join({ url: `${roomUrl}?t=${roomToken}` });
 
     // 3. Redirect on leave
     frame.on('left-meeting', () => {
       frame.destroy();
-      navigate('/my-appointments'); // Adjust the redirect path as necessary
+      leftCall(); // Call the function to handle leaving the call
     });
 
     return () => {
@@ -40,7 +54,7 @@ function VideoCall({ roomUrl, token }) {
         frame.iframe.remove();
       }
     };
-  }, [roomUrl, token, navigate]);
+  }, [roomUrl, roomToken, navigate]);
 
   return null; // We don't need to render anything in the DOM
 }

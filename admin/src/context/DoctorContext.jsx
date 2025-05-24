@@ -109,13 +109,13 @@ const DoctorContextProvider = (props) => {
             console.log(data)
             if (data.success) {
                 toast.success("Call started");
-                navigate('/video-call', { state: { roomUrl: data.roomUrl, token: data.token } });
+                navigate('/video-call', { state: { roomUrl: data.roomUrl, roomToken: data.token, appointmentId: appointmentId } });
             } else {
                 toast.error(data.message);
             }
         } catch (error) {
             console.log(error);
-            
+
             toast.error("Error starting call");
         }
     };

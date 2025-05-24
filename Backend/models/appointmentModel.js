@@ -17,6 +17,10 @@ const appointmentSchema = new mongoose.Schema({
     date: { type: Number, required: true }, //Appointment Date
     cancelled: { type: Boolean, default: false },
     payment: { type: Boolean, default: false },
+    dFstJoin: {type: Date, default: undefined},
+    pFstJoin: {type: Date, default: undefined},
+    dLastLeave: {type: Date, default: undefined},
+    pLastLeave: {type: Date, default: undefined},
     roomUrl: {type: String, default: ''},
     
     isCompleted: { type: Boolean, default: false },

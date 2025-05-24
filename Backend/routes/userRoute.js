@@ -11,7 +11,8 @@ import {
   cancelAppointments,
   paymentRazorpay,
   verifyRazorpay,
-  joinCall
+  joinCall,
+  leftCall
 } from "../controllers/userController.js";
 import authUser from "../middlewares/authUser.js";
 import upload from "../middlewares/multer.js";
@@ -33,5 +34,6 @@ userRouter.post("/cancel-appointment", authUser, cancelAppointments); // We add 
 userRouter.post("/payment-razorpay", authUser, paymentRazorpay); // We add the authuser bcz we required userId and we are not going to send the userId directly we are going to send the header and from the header we will get the userId so just add the authuser .
 userRouter.post("/verifyRozorpay", authUser, verifyRazorpay);
 userRouter.post("/joinCall", authUser, joinCall);
+userRouter.post("/left-call", authUser, leftCall);
 
 export default userRouter;

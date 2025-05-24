@@ -40,7 +40,6 @@ function Login() {
         if (data.success) {
           localStorage.setItem('dToken', data.token) //we store the token in the local storag due to which when the page is reloade admin should be login.
           setDToken(data.token)
-          console.log(data.token)
         } else {
           toast.error(data.message)
         }

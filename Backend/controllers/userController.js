@@ -15,7 +15,7 @@ import axios from "axios";
 // API to register user
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, gender,  phone, address, dob } = req.body;
+    const { name, email, password, gender, phone, address, dob } = req.body;
 
     if (!name || !email || !password || !gender || !phone || !address || !dob) {
       return res.json({
@@ -412,6 +412,10 @@ const joinCall = async (req, res) => {
       }
     );
 
+    appointment.pFstJoin = appointment.pFstJoin || new Date();
+
+    await appointment.save(); // Save the appointment to update the first join time
+
     res.json({
       success: true,
       token: tokenResponse.data.token,
@@ -426,6 +430,28 @@ const joinCall = async (req, res) => {
   }
 };
 
+const leftCall = async (req, res) => {
+  try {
+    const { appointmentId, userId } = req.body;
+    const appointment = await appointmentModel.findById(appointmentId);
+    if (!appointment || appointment.userId.toString() !== userId) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized or appointment not found",
+      });
+    }
+    appointment.pLastLeave = new Date();
+    await appointment.save();
+    return res.json({
+      success: true,
+      message: "Left the call successfully",
+    });
+  } catch (error) {
+    console.error("Error left join:", error.message);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export {
   registerUser,
   loginUser,
@@ -437,4 +463,5 @@ export {
   paymentRazorpay,
   verifyRazorpay,
   joinCall,
+  leftCall,
 };

@@ -1,13 +1,13 @@
 import { useLocation } from 'react-router-dom';
-import VideoCall from '../components/VideoCall';
+import VideoCall from '../components/videocall';
 
 function VideoCallWrapper() {
   const { state } = useLocation();
-  const { roomUrl, token } = state || {};
+  const { roomUrl, roomToken , appointmentId} = state || {};
 
-  if (!roomUrl || !token) return <p>Missing call details</p>;
+  if (!roomUrl || !roomToken) return <p>Missing call details</p>;
 
-  return <VideoCall roomUrl={roomUrl} token={token} />;
+  return <VideoCall roomUrl={roomUrl} roomToken={roomToken} appointmentId = {appointmentId}/>;
 }
 
 export default VideoCallWrapper;

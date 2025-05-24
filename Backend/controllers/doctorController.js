@@ -85,6 +85,8 @@ const appointmentsDoctor = async (req, res) => {
   try {
     const { docId } = req.body;
     const appointments = await appointmentModel.find({ docId });
+    console.log(appointments);
+    
 
     res.json({
       success: true,
@@ -282,6 +284,7 @@ const startOrGetCall = async (req, res) => {
 
       appointment.roomUrl = roomResp.data.url;
       appointment.status = "in-progress";
+      appointment.dFstJoin = appointment.dFstJoin || new Date();
       await appointment.save();
     };
 
@@ -321,6 +324,9 @@ const startOrGetCall = async (req, res) => {
         headers: { Authorization: `Bearer ${process.env.DAILY_API_KEY}` },
       }
     );
+    
+    console.log("doctor Token:", tokenResp.data.token);
+    
 
     return res.json({
       success: true,
@@ -328,11 +334,37 @@ const startOrGetCall = async (req, res) => {
       token: tokenResp.data.token,
     });
   } catch (error) {
-    console.error("Error starting or getting doctor call:", error.response?.data || error.message);
+    console.error(
+      "Error starting or getting doctor call:",
+      error.response?.data || error.message
+    );
     return res.status(500).json({ success: false, message: error.message });
   }
 };
 
+const doctorLeftCall = async (req, res) => {
+  try {
+    const { appointmentId, docId } = req.body;
+    const appointment = await appointmentModel.findById(appointmentId);
+    if (!appointment || appointment.docId.toString() !== docId) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized or appointment not found",
+      });
+    }
+
+    appointment.dLastLeave = new Date();
+
+    await appointment.save();
+    return res.json({
+      success: true,
+      message: "Left the call successfully",
+    });
+  } catch (error) {
+    console.error("Error left join:", error.message);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
 
 export {
   changeAvailability,
@@ -345,4 +377,5 @@ export {
   updateDoctorProfile,
   doctorProfile,
   startOrGetCall,
+  doctorLeftCall,
 };
