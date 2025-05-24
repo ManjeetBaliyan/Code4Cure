@@ -18,10 +18,10 @@ connectCloudinary()
 //middleware
 app.use(express.json())
 app.use(cors({
-  origin: 'https://my-doctor-woad.vercel.app/', // or '*' for all (not recommended for production)
+  origin: 'https://my-doctor-woad.vercel.app/',
 }));
 app.use(cors({
-  origin: 'https://my-doctor-woad.vercel.app/', // or '*' for all (not recommended for production)
+  origin: 'https://my-doctor-wcep.vercel.app/', 
 }));
 
 // api Endpoint
