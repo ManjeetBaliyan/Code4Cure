@@ -17,7 +17,12 @@ connectCloudinary()
 
 //middleware
 app.use(express.json())
-app.use(cors()) // allow to connect backend with the frontend
+app.use(cors({
+  origin: 'https://my-doctor-woad.vercel.app/', // or '*' for all (not recommended for production)
+}));
+app.use(cors({
+  origin: 'https://my-doctor-woad.vercel.app/', // or '*' for all (not recommended for production)
+}));
 
 // api Endpoint
 app.use('/api/admin',adminRouter) // localhost:4000/api/admin/add-doctor
