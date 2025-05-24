@@ -85,8 +85,6 @@ const appointmentsDoctor = async (req, res) => {
   try {
     const { docId } = req.body;
     const appointments = await appointmentModel.find({ docId });
-    console.log(appointments);
-    
 
     res.json({
       success: true,
@@ -324,9 +322,6 @@ const startOrGetCall = async (req, res) => {
         headers: { Authorization: `Bearer ${process.env.DAILY_API_KEY}` },
       }
     );
-    
-    console.log("doctor Token:", tokenResp.data.token);
-    
 
     return res.json({
       success: true,
