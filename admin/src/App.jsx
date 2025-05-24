@@ -44,7 +44,7 @@ function App() {
 
   {/* ---ADMIN ROUTES----- */}
   <Route path='/add-doctor' element={<AddDoctor />} />
-  <Route path='/all-appointments' element={<AllApointments />} />
+  <Route path='/all-appointments' element={<AllAppointments />} />
   <Route path='/admin-dashboard' element={<Dashboard />} />
   <Route path='/doctor-list' element={<DoctorsList />} />
 
