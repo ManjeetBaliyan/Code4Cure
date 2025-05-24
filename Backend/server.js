@@ -17,11 +17,19 @@ connectCloudinary()
 
 //middleware
 app.use(express.json())
+const allowedOrigins = [
+  'https://my-doctor-woad.vercel.app',
+  'https://my-doctor-wcep.vercel.app',
+];
+
 app.use(cors({
-  origin: 'https://my-doctor-woad.vercel.app/',
-}));
-app.use(cors({
-  origin: 'https://my-doctor-wcep.vercel.app/', 
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
 }));
 
 // api Endpoint
