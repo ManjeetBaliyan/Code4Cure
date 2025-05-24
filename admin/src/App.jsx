@@ -8,7 +8,7 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import { Route, Routes } from 'react-router-dom'
 import AddDoctor from './pages/Admin/AddDoctor'
-import AllApointments from './pages/Admin/AllAppointments'
+import AllAppointments from './pages/Admin/AllAppointments'
 import Dashboard from './pages/Admin/Dashboard'
 import DoctorsList from './pages/Admin/DoctorList'
 import { DoctorContext } from './context/DoctorContext';
@@ -44,7 +44,7 @@ function App() {
 
   {/* ---ADMIN ROUTES----- */}
   <Route path='/add-doctor' element={<AddDoctor />} />
-  <Route path='/all-appointments' element={<AllApointments />} />
+  <Route path='/all-appointments' element={<AllAppointments />} />
   <Route path='/admin-dashboard' element={<Dashboard />} />
   <Route path='/doctor-list' element={<DoctorsList />} />
 
