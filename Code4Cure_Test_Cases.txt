@@ -6,6 +6,10 @@ Code4Cure - Test Cases
 If the website does not work then wait for 2-3 min 
 since the backend server hosted on render.com may be inactive due to no activity.
 
+## LINKS : 
+User : https://code4cure-patient.vercel.app/
+Doctor/Admin : https://code4cure-doctor-admin.vercel.app/
+
 ## TEST CREDENTIALS : 
 ---------------------
 # Dummy Card Detail :
