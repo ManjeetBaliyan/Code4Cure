@@ -2,6 +2,10 @@
 Code4Cure - Test Cases
 ==============================
 
+###### NOTE #######
+If website does not work, wait 2 3 min
+It is due to shutdown of backend server hosted on render.com due to inactivity
+
 1. Patient Registration and Specialty Mapping
 -----------------------------------------------
 Test Case: Patient Registration
