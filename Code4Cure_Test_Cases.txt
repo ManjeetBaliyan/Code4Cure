@@ -6,71 +6,9 @@ Code4Cure - Test Cases
 If the website does not work then wait for 2-3 min 
 since the backend server hosted on render.com may be inactive due to no activity.
 
-1. Patient Registration and Specialty Mapping
------------------------------------------------
-Test Case: Patient Registration
-Steps:
-1. Navigate to the patient registration form.
-2. Fill in all required fields: name, email, DOB, gender, phone, address.
-3. Submit the form.
-Expected Result: Patient account is created with valid data saved in the database.
+## TEST CREDENTIALS : 
+Doctor email : kumarsushant25@gamil.com
+Doctor pass : sushant25
 
-Test Case: Specialty Assignment
-Steps:
-1. Admin registers a new doctor and assigns a specialty.
-2. Patient books appointment by selecting a specialty.
-Expected Result: Patient is matched with a doctor of the selected specialty.
-
-2. Payment Validation
--------------------------
-Test Case: Payment Block Before Joining
-Steps:
-1. Attempt to click "Join Call" before completing payment.
-Expected Result: "Join Call" button is disabled; backend prevents access.
-
-Test Case: Dummy Payment with Success/Failure
-Steps:
-1. Proceed to payment and enter dummy card details (e.g., 5267 3181 8797 5449).
-2. Simulate payment success or failure.
-3. On success, "Join Call" button becomes enabled.
-4. On failure, an error message is shown and access is denied.
-Expected Result: System handles both success and failure properly; only successful payments enable call access.
-
-3. Security and Authentication
------------------------------------
-Test Case: JWT and Meeting Token Validation
-Steps:
-1. Try to access a meeting using an invalid token.
-Expected Result: Access is denied.
-
-Test Case: Unauthorized User Join
-Steps:
-1. Attempt to join a meeting not assigned to the logged-in user.
-Expected Result: Backend rejects the request.
-
-4. Video Call Functionality
-------------------------------
-Test Case: Video Call Connection
-Steps:
-1. Login as a doctor on one device.
-2. Login as a patient on another device.
-3. Initiate a video call.
-Expected Result: Call connects successfully with stable video and audio quality.
-
-5. In-Call Chat Functionality
--------------------------------
-Test Case: Send and Receive Messages
-Steps:
-1. Start a call between doctor and patient.
-2. Send a chat message from one end.
-3. Confirm delivery on the other end.
-Expected Result: Messages appear instantly on both sides.
-
-6. Live Transcription
-------------------------
-Test Case: Real-Time Captions Activation
-Steps:
-1. Start a video consultation between doctor and patient.
-2. Doctor clicks the "Captions" button to enable live transcription.
-3. Patient observes the captions becoming visible on their screen.
-Expected Result: Captions are activated by the doctor and automatically appear for the patient. Speech is transcribed live and accurately on both ends.
+User email : baliyanmanjeet21@gmail.com 
+User pass : 123456789
