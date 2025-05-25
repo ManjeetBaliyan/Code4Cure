@@ -7,7 +7,7 @@ function Footer() {
                 {/* ----------------------------Left Section ----------------------*/}
                 <div>
                     <img className='mb-5 w-40' src={assets.logo} alt="" />
-                    <p className='w-full md:w-2/3 text-gray-600 leading-6'>MyDoctor makes healthcare simple by connecting you with trusted doctors anytime, anywhere. Book appointments quickly and effortlessly from the comfort of your home. Enjoy reliable, hassle-free medical care with just a few clicks. Your health, made easy.</p>
+                    <p className='w-full md:w-2/3 text-gray-600 leading-6'>Code4Cure makes healthcare simple by connecting you with trusted doctors anytime, anywhere. Book appointments quickly and effortlessly from the comfort of your home. Enjoy reliable, hassle-free medical care with just a few clicks. Your health, made easy.</p>
                 </div>
                 {/* ----------------------------Center Section ----------------------*/}
                 <div>
