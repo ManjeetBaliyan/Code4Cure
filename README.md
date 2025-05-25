@@ -144,5 +144,3 @@ Developed by Team Code4Cure
 ## 📄 License
 
 This project is licensed under the MIT License.
-
-```
