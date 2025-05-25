@@ -7,8 +7,19 @@ If the website does not work then wait for 2-3 min
 since the backend server hosted on render.com may be inactive due to no activity.
 
 ## TEST CREDENTIALS : 
-Doctor email : kumarsushant25@gamil.com
-Doctor pass : sushant25
+---------------------
+# Dummy Card Detail :
+1) Card no: 5267 3181 8797 5449 / CVV : 123 / EXPIRY : 11/27
+2) Card no: 4386 2894 0766 0153 / CVV : 123 / EXPIRY : 11/27
 
-User email : baliyanmanjeet21@gmail.com 
-User pass : 123456789
+# Doctors Login Test Case
+1) email : kumarsushant25@gamil.com / pass : sushant25
+2) email : bhardwajdeepali25@gmail.com / pass : bhardwaj25
+3) email : manjeetbaliyan21@gmail.com / pass : Manjeet@_01
+4) email : bhattmohit_25@gmail.com / pass : bhatt@25
+
+# User Login Test Case
+1) email : manjeetbaliyan01@gmail.com / pass : 123456789
+2) email : sumilverma01@gmail.com / pass : Sumil@_01
+3) email : vanshtomar01@gmail.com / pass : Vansh@_01
+4) email : monayadav01@gmail.com / pass : monayadav@01
