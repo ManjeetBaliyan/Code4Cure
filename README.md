@@ -1,4 +1,7 @@
 # 🩺 Code4Cure
+## LINKS
+#### Patient - https://code4cure-patient.vercel.app/
+#### Doctor/Admin - https://code4cure-doctor-admin.vercel.app/
 
 **Code4Cure** is a full-stack telemedicine web application that connects patients with doctors through a streamlined platform featuring real-time video consultations, appointment management, secure payments, and separate role-based interfaces.
 
