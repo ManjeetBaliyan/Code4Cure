@@ -21,8 +21,8 @@ app.use(express.json());
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
-  'https://my-doctor-woad.vercel.app',
-  'https://my-doctor-wcep.vercel.app',
+  'https://code4cure-patient.vercel.app',
+  'https://code4cure-doctor-admin.vercel.app',
 ];
 
 app.use(cors({
