@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import VideoCall from '../components/videocall'; // Adjust the import path as necessary
+import VideoCall from '../components/VideoCall'; // Adjust the import path as necessary
 
 function VideoCallWrapper() {
   const { state } = useLocation();
